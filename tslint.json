@@ -1,0 +1,16 @@
+{
+  "defaultSeverity": "warning",
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "jsRules": {},
+  "linterOptions": {
+    "exclude": ["node_modules/**/*.ts"]
+  },
+  "rules": {
+    "function-name": false,
+    "jsx-no-lambda": false,
+    "object-literal-sort-keys": false,
+    "prettier": true,
+    "variable-name": false
+  },
+  "rulesDirectory": ["tslint-plugin-prettier"]
+}
