@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 // imported to make sure parcel includes it
@@ -14,18 +14,42 @@ import '../../images/game-icon/twinspin.jpg'
 
 import { selectAuthenticatedUser } from '../../redux/auth'
 import logoImg from '../../images/logo.svg'
-import { getGames, getCategories, selectGamesState } from './services'
+import {
+  getGames,
+  getCategories,
+  selectGamesState,
+  selectCategory,
+} from './services'
 import { ICategory, IGame } from './reducer'
 
 const GamesPage = () => {
   const dispatch = useDispatch()
   const user = useSelector(selectAuthenticatedUser)
-  const { games, categories } = useSelector(selectGamesState)
+  const { games: allGames, categories, selectedCategoryId } = useSelector(
+    selectGamesState
+  )
 
   useEffect(() => {
     dispatch(getGames())
     dispatch(getCategories())
   }, [dispatch])
+
+  const handleCategoryClick = useCallback(
+    (categoryId: number) => {
+      dispatch(selectCategory(categoryId))
+    },
+    [dispatch, selectCategory]
+  )
+
+  const games = useMemo(
+    () =>
+      allGames.filter(
+        (game) =>
+          !selectedCategoryId ||
+          game.categoryIds.some((id) => id === selectedCategoryId)
+      ),
+    [allGames, selectedCategoryId]
+  )
 
   return (
     <div>
@@ -78,7 +102,12 @@ const GamesPage = () => {
               <h3 className="ui dividing header">Categories</h3>
               <div className="ui selection animated list category items">
                 {categories.map((category) => (
-                  <CategoryItem key={category.id} category={category} />
+                  <CategoryItem
+                    key={category.id}
+                    category={category}
+                    selected={selectedCategoryId === category.id}
+                    onClick={handleCategoryClick}
+                  />
                 ))}
               </div>
             </div>
@@ -109,12 +138,28 @@ const GameItem: React.FC<{ game: IGame }> = ({ game }) => (
   </div>
 )
 
-const CategoryItem: React.FC<{ category: ICategory }> = ({ category }) => (
-  <div className="category item">
-    <div className="content">
-      <div className="header">{category.name}</div>
+const CategoryItem: React.FC<{
+  category: ICategory
+  selected: boolean
+  onClick: (
+    categoryId: number,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => void
+}> = ({ category, selected, onClick }) => {
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+      onClick(category.id, event),
+    [onClick, category.id]
+  )
+  return (
+    <div className="category item" onClick={handleClick}>
+      <div className="content">
+        <div className="header">
+          {category.name}
+          {selected && ' <'}
+        </div>
+      </div>
     </div>
-  </div>
-)
-
+  )
+}
 export default GamesPage

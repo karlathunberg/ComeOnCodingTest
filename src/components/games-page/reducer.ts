@@ -6,6 +6,7 @@ export const GET_GAMES_FAILED = 'games/GET_GAMES_FAILED'
 export const GET_CATEGORIES_STARTED = 'games/GET_CATEGORIES_STARTED'
 export const GET_CATEGORIES_FINISHED = 'games/GET_CATEGORIES_FINISHED'
 export const GET_CATEGORIES_FAILED = 'games/GET_CATEGORIES_FAILED'
+export const SELECT_CATEGORY = 'games/SELECT_CATEGORY'
 
 export interface IGame {
   name: string
@@ -56,6 +57,13 @@ export interface IGetCategoriesFailedAction {
   }
 }
 
+export interface ISelectCategoryAction {
+  type: typeof SELECT_CATEGORY
+  payload: {
+    categoryId: number
+  }
+}
+
 export type AuthActionTypes =
   | IGetGamesStartedAction
   | IGetGamesFinishedAction
@@ -63,6 +71,7 @@ export type AuthActionTypes =
   | IGetCategoriesStartedAction
   | IGetCategoriesFinishedAction
   | IGetCategoriesFailedAction
+  | ISelectCategoryAction
 
 export type GamesPageState = Readonly<{
   isLoadingGames: boolean
@@ -71,6 +80,7 @@ export type GamesPageState = Readonly<{
   isLoadingCategories: boolean
   categories: ICategory[]
   loadingCategoriesError: string | null
+  selectedCategoryId: number | null
 }>
 
 const initialState: GamesPageState = {
@@ -80,6 +90,7 @@ const initialState: GamesPageState = {
   isLoadingCategories: false,
   categories: [],
   loadingCategoriesError: null,
+  selectedCategoryId: null,
 }
 
 const reducer = (
@@ -114,6 +125,11 @@ const reducer = (
         ...prevState,
         loadingCategoriesError: action.payload.error,
         isLoadingCategories: false,
+      }
+    case SELECT_CATEGORY:
+      return {
+        ...prevState,
+        selectedCategoryId: action.payload.categoryId,
       }
     default:
       return prevState

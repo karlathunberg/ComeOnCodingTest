@@ -8,6 +8,7 @@ import {
   GET_CATEGORIES_STARTED,
   GET_CATEGORIES_FINISHED,
   GET_CATEGORIES_FAILED,
+  SELECT_CATEGORY,
 } from './reducer'
 import { AppState } from '../../redux/root-reducer'
 import history from '../../utils/history'
@@ -58,5 +59,10 @@ export const getCategories = (): ThunkAction<
     }
   }
 }
+
+export const selectCategory = (categoryId: number) => ({
+  type: SELECT_CATEGORY,
+  payload: { categoryId },
+})
 
 export const selectGamesState = (state: AppState) => state.games
