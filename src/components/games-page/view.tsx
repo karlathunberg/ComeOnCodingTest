@@ -14,16 +14,17 @@ import '../../images/game-icon/twinspin.jpg'
 
 import { selectAuthenticatedUser } from '../../redux/auth'
 import logoImg from '../../images/logo.svg'
-import { getGames, selectGamesState } from './services'
-import { IGame } from './reducer'
+import { getGames, getCategories, selectGamesState } from './services'
+import { ICategory, IGame } from './reducer'
 
 const GamesPage = () => {
   const dispatch = useDispatch()
   const user = useSelector(selectAuthenticatedUser)
-  const { games } = useSelector(selectGamesState)
+  const { games, categories } = useSelector(selectGamesState)
 
   useEffect(() => {
     dispatch(getGames())
+    dispatch(getCategories())
   }, [dispatch])
 
   return (
@@ -76,13 +77,9 @@ const GamesPage = () => {
             <div className="four wide column">
               <h3 className="ui dividing header">Categories</h3>
               <div className="ui selection animated list category items">
-                {/* category item template */}
-                <div className="category item">
-                  <div className="content">
-                    <div className="header" />
-                  </div>
-                </div>
-                {/* end category item template */}
+                {categories.map((category) => (
+                  <CategoryItem key={category.id} category={category} />
+                ))}
               </div>
             </div>
           </div>
@@ -108,6 +105,14 @@ const GameItem: React.FC<{ game: IGame }> = ({ game }) => (
           <i className="right chevron icon" />
         </div>
       </div>
+    </div>
+  </div>
+)
+
+const CategoryItem: React.FC<{ category: ICategory }> = ({ category }) => (
+  <div className="category item">
+    <div className="content">
+      <div className="header">{category.name}</div>
     </div>
   </div>
 )

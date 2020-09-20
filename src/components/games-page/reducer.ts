@@ -3,6 +3,9 @@ import { ThunkAction } from 'redux-thunk'
 export const GET_GAMES_STARTED = 'games/GET_GAMES_STARTED'
 export const GET_GAMES_FINISHED = 'games/GET_GAMES_FINISHED'
 export const GET_GAMES_FAILED = 'games/GET_GAMES_FAILED'
+export const GET_CATEGORIES_STARTED = 'games/GET_CATEGORIES_STARTED'
+export const GET_CATEGORIES_FINISHED = 'games/GET_CATEGORIES_FINISHED'
+export const GET_CATEGORIES_FAILED = 'games/GET_CATEGORIES_FAILED'
 
 export interface IGame {
   name: string
@@ -10,6 +13,11 @@ export interface IGame {
   code: string
   icon: string
   categoryIds: number[]
+}
+
+export interface ICategory {
+  id: number
+  name: string
 }
 
 export interface IGetGamesStartedAction {
@@ -30,38 +38,83 @@ export interface IGetGamesFailedAction {
   }
 }
 
+export interface IGetCategoriesStartedAction {
+  type: typeof GET_CATEGORIES_STARTED
+}
+
+export interface IGetCategoriesFinishedAction {
+  type: typeof GET_CATEGORIES_FINISHED
+  payload: {
+    categories: ICategory[]
+  }
+}
+
+export interface IGetCategoriesFailedAction {
+  type: typeof GET_CATEGORIES_FAILED
+  payload: {
+    error: string
+  }
+}
+
 export type AuthActionTypes =
   | IGetGamesStartedAction
   | IGetGamesFinishedAction
   | IGetGamesFailedAction
+  | IGetCategoriesStartedAction
+  | IGetCategoriesFinishedAction
+  | IGetCategoriesFailedAction
 
-export type GamesState = Readonly<{
-  isLoading: boolean // true while fetching games from api
+export type GamesPageState = Readonly<{
+  isLoadingGames: boolean
   games: IGame[]
-  error: string | null
+  loadingGamesError: string | null
+  isLoadingCategories: boolean
+  categories: ICategory[]
+  loadingCategoriesError: string | null
 }>
 
-const initialState: GamesState = {
-  isLoading: false,
+const initialState: GamesPageState = {
+  isLoadingGames: false,
   games: [],
-  error: null,
+  loadingGamesError: null,
+  isLoadingCategories: false,
+  categories: [],
+  loadingCategoriesError: null,
 }
 
 const reducer = (
   prevState = initialState,
   action: AuthActionTypes
-): GamesState => {
+): GamesPageState => {
   switch (action.type) {
     case GET_GAMES_STARTED:
-      return { ...initialState, isLoading: true }
+      return { ...initialState, isLoadingGames: true }
     case GET_GAMES_FINISHED:
       return {
         ...prevState,
         games: action.payload.games,
-        isLoading: false,
+        isLoadingGames: false,
       }
     case GET_GAMES_FAILED:
-      return { ...prevState, error: action.payload.error, isLoading: false }
+      return {
+        ...prevState,
+        loadingGamesError: action.payload.error,
+        isLoadingGames: false,
+      }
+    case GET_CATEGORIES_STARTED:
+      return { ...initialState, isLoadingCategories: true }
+    case GET_CATEGORIES_FINISHED:
+      return {
+        ...prevState,
+        categories: action.payload.categories,
+        isLoadingCategories: false,
+      }
+    case GET_CATEGORIES_FAILED:
+      return {
+        ...prevState,
+        loadingCategoriesError: action.payload.error,
+        isLoadingCategories: false,
+      }
     default:
       return prevState
   }
