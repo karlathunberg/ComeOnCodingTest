@@ -30,3 +30,4 @@ export const logIn = (
 }
 
 export const selectAuthState = (state: AppState) => state.auth
+export const selectAuthenticatedUser = (state: AppState) => state.auth.user!

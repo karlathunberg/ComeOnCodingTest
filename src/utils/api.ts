@@ -1,6 +1,7 @@
 import { API_URL } from './variables'
 
 const API_LOGIN_URL = `${API_URL}/login`
+const API_GAMES_URL = `${API_URL}/games`
 
 interface ApiResponse<T> extends Response {
   parsedBody?: T
@@ -37,6 +38,34 @@ export async function logIn(username: string, password: string) {
   } catch (ex) {
     // this should never happen for a user
     throw new Error(`Could not parse body of api request ${API_LOGIN_URL}`)
+  }
+
+  return response
+}
+
+interface IGamesResponseBodyItem {
+  name: string
+  description: string
+  code: string
+  icon: string
+  categoryIds: number[]
+}
+
+interface IGamesResponseBody extends Array<IGamesResponseBodyItem> {}
+
+export async function getGames() {
+  const response: ApiResponse<IGamesResponseBody> = await fetch(API_GAMES_URL, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  try {
+    response.parsedBody = await response.json()
+  } catch (ex) {
+    // this should never happen for a user
+    throw new Error(`Could not parse body of api request ${API_GAMES_URL}`)
   }
 
   return response
