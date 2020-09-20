@@ -19,15 +19,19 @@ import {
   getCategories,
   selectGamesState,
   selectCategory,
+  search,
 } from './services'
 import { ICategory, IGame } from './reducer'
 
 const GamesPage = () => {
   const dispatch = useDispatch()
   const user = useSelector(selectAuthenticatedUser)
-  const { games: allGames, categories, selectedCategoryId } = useSelector(
-    selectGamesState
-  )
+  const {
+    games: allGames,
+    categories,
+    selectedCategoryId,
+    searchText,
+  } = useSelector(selectGamesState)
 
   useEffect(() => {
     dispatch(getGames())
@@ -41,14 +45,26 @@ const GamesPage = () => {
     [dispatch, selectCategory]
   )
 
+  const handleSearchTextChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(search(event.target.value))
+    },
+    [dispatch, search]
+  )
+
   const games = useMemo(
     () =>
-      allGames.filter(
-        (game) =>
-          !selectedCategoryId ||
-          game.categoryIds.some((id) => id === selectedCategoryId)
-      ),
-    [allGames, selectedCategoryId]
+      allGames
+        .filter(
+          (game) =>
+            !selectedCategoryId ||
+            game.categoryIds.some((id) => id === selectedCategoryId)
+        )
+        .filter(
+          (game) =>
+            !searchText || game.name.toLowerCase().indexOf(searchText) !== -1
+        ),
+    [allGames, selectedCategoryId, searchText]
   )
 
   return (
@@ -84,7 +100,12 @@ const GamesPage = () => {
             </div>
             <div className="four wide column">
               <div className="search ui small icon input ">
-                <input type="text" placeholder="Search Game" />
+                <input
+                  type="text"
+                  placeholder="Search Game"
+                  value={searchText ?? ''}
+                  onChange={handleSearchTextChange}
+                />
                 <i className="search icon" />
               </div>
             </div>
