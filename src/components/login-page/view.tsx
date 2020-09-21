@@ -7,7 +7,7 @@ import logoImg from '../../images/logo.svg'
 
 const LoginPage = () => {
   const dispatch = useDispatch()
-  const { isAuthenticated, isLoading } = useSelector(selectAuthState)
+  const { isAuthenticated, isLoading, error } = useSelector(selectAuthState)
 
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -38,43 +38,52 @@ const LoginPage = () => {
       <div className="main container">
         <div className="login">
           <div className="ui grid centered">
-            <form>
-              <div className="fields">
-                <div className="required field">
-                  <div className="ui icon input">
-                    <input
-                      type="text"
-                      name="username"
-                      placeholder="Username"
-                      onChange={handleUsernameChange}
-                    />
-                    <i className="user icon" />
+            <div className="ui one column stackable center aligned page grid">
+              <div className="column twelve wide">
+                {error && (
+                  <div className="ui compact error message">
+                    Could not log in: {error}
                   </div>
-                </div>
-                <div className="required field">
-                  <div className="ui icon input">
-                    <input
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      onChange={handlePasswordChange}
-                    />
-                    <i className="lock icon" />
+                )}
+                <form>
+                  <div className="fields">
+                    <div className="required field">
+                      <div className="ui icon input">
+                        <input
+                          type="text"
+                          name="username"
+                          placeholder="Username"
+                          onChange={handleUsernameChange}
+                        />
+                        <i className="user icon" />
+                      </div>
+                    </div>
+                    <div className="required field">
+                      <div className="ui icon input">
+                        <input
+                          type="password"
+                          name="password"
+                          placeholder="Password"
+                          onChange={handlePasswordChange}
+                        />
+                        <i className="lock icon" />
+                      </div>
+                    </div>
+                    <div className="field">
+                      <div className="ui icon input">
+                        <input
+                          type="submit"
+                          defaultValue="Login"
+                          disabled={disableLogIn}
+                          onClick={handleLogInClick}
+                        />
+                        <i className="right chevron icon" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="field">
-                  <div className="ui icon input">
-                    <input
-                      type="submit"
-                      defaultValue="Login"
-                      disabled={disableLogIn}
-                      onClick={handleLogInClick}
-                    />
-                    <i className="right chevron icon" />
-                  </div>
-                </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
