@@ -16,7 +16,8 @@ import { set as setInLocalStorage, clear as clearLocalStorage } from './storage'
 
 export const logIn = (
   username: string,
-  password: string
+  password: string,
+  returnUrl: string
 ): ThunkAction<void, AppState, null, Action<string>> => {
   return async (dispatch) => {
     dispatch({ type: LOG_IN_STARTED })
@@ -30,7 +31,7 @@ export const logIn = (
         payload: { user },
       })
 
-      history.push('/games')
+      history.push(returnUrl || '/games')
     } else {
       dispatch({
         type: LOG_IN_FAILED,

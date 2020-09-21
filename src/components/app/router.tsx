@@ -38,6 +38,7 @@ const AuthenticatedRoute: React.FunctionComponent<IProps> = ({
           <Redirect
             to={{
               pathname: '/login',
+              state: { returnUrl: props.location.pathname },
             }}
           />
         )

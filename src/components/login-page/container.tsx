@@ -1,13 +1,19 @@
 import * as React from 'react'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 
 import { logIn, selectAuthState } from '../../redux/auth'
-import logoImg from '../../images/logo.svg'
 import LoginPageView from './view'
+
+interface LocationState {
+  returnUrl: string
+}
 
 const LoginPageContainer = () => {
   const dispatch = useDispatch()
+  const location = useLocation<LocationState>()
+  const returnUrl = location.state?.returnUrl
   const { isAuthenticated, isLoading, error } = useSelector(selectAuthState)
 
   const [username, setUsername] = useState<string>('')
@@ -24,8 +30,8 @@ const LoginPageContainer = () => {
   )
 
   const handleLogInClick = useCallback(() => {
-    return dispatch(logIn(username, password))
-  }, [dispatch, username, password])
+    return dispatch(logIn(username, password, returnUrl))
+  }, [dispatch, username, password, returnUrl])
 
   const logInIsDisabled = isAuthenticated || isLoading
 
