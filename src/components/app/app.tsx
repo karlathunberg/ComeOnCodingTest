@@ -63,7 +63,11 @@ const AppContent = () => (
       </Route>
       <Route exact={true} path="/login" component={LoginPage} />
       <AuthenticatedRoute exact={true} path="/games" component={GamesPage} />
-      <AuthenticatedRoute exact={true} path="/game" component={GamePage} />
+      <AuthenticatedRoute
+        exact={true}
+        path="/games/:code"
+        component={GamePage}
+      />
       <Route path="/" component={NotFoundPage} />
     </Switch>
   </RouterDom>

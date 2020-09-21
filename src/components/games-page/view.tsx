@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 // imported to make sure parcel includes it
 import '../../images/avatar/eric.jpg'
@@ -139,25 +140,38 @@ const GamesPage = () => {
   )
 }
 
-const GameItem: React.FC<{ game: IGame }> = ({ game }) => (
-  <div className="game item">
-    <div className="ui small image">
-      <img src={game.icon} alt="game-icon" />
-    </div>
-    <div className="content">
-      <div className="header">
-        <b className="name">{game.name}</b>
+const GameItem: React.FC<{
+  game: IGame
+}> = ({ game }) => {
+  const history = useHistory()
+
+  const handleGameClick = useCallback(
+    () => history.push(`/games/${game.code}`),
+    [history, game.code]
+  )
+
+  return (
+    <div className="game item">
+      <div className="ui small image">
+        <img src={game.icon} alt="game-icon" />
       </div>
-      <div className="description">{game.description}</div>
-      <div className="extra">
-        <div className="play ui right floated secondary button inverted">
-          Play
-          <i className="right chevron icon" />
+      <div className="content">
+        <div className="header">
+          <b className="name">{game.name}</b>
+        </div>
+        <div className="description">{game.description}</div>
+        <div className="extra">
+          <div
+            className="play ui right floated secondary button inverted"
+            onClick={handleGameClick}>
+            Play
+            <i className="right chevron icon" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 const CategoryItem: React.FC<{
   category: ICategory
