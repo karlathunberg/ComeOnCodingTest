@@ -54,11 +54,20 @@ const AuthenticatedRoute: React.FunctionComponent<IProps> = ({
   return <Route {...rest} render={handleRender} />
 }
 
+const RedirectRoot = () => {
+  const { isAuthenticated } = useSelector(selectAuthState)
+  if (isAuthenticated) {
+    return <Redirect to="/games" />
+  } else {
+    return <Redirect to="login" />
+  }
+}
+
 const Router = () => (
   <RouterDom history={history}>
     <Switch>
       <Route exact={true} path="/">
-        <Redirect to="/login" />
+        <RedirectRoot />
       </Route>
       <Route exact={true} path="/login" component={LoginPage} />
       <AuthenticatedRoute exact={true} path="/games" component={GamesPage} />

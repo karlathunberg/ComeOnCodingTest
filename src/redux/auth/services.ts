@@ -12,6 +12,7 @@ import {
 import { AppState } from '../root-reducer'
 import history from '../../utils/history'
 import * as Api from '../../utils/api'
+import { set as setInLocalStorage, clear as clearLocalStorage } from './storage'
 
 export const logIn = (
   username: string,
@@ -21,9 +22,12 @@ export const logIn = (
     dispatch({ type: LOG_IN_STARTED })
     const response = await Api.logIn(username, password)
     if (response.ok && response.parsedBody?.status === Api.ApiStatus.success) {
+      const user = { username, ...response.parsedBody?.player }
+      setInLocalStorage(user)
+
       dispatch({
         type: LOG_IN_FINISHED,
-        payload: { user: { username, ...response.parsedBody?.player } },
+        payload: { user },
       })
 
       history.push('/games')
@@ -43,6 +47,8 @@ export const logOut = (
     dispatch({ type: LOG_OUT_STARTED })
     const response = await Api.logOut(username)
     if (response.ok && response.parsedBody?.status === Api.ApiStatus.success) {
+      clearLocalStorage()
+
       dispatch({
         type: LOG_OUT_FINISHED,
       })

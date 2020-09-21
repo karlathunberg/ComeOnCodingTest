@@ -1,4 +1,4 @@
-import { ThunkAction } from 'redux-thunk'
+import { get as getFromLocalStorage } from './storage'
 
 export const LOG_IN_STARTED = 'auth/LOG_IN_STARTED'
 export const LOG_IN_FINISHED = 'auth/LOG_IN_FINISHED'
@@ -63,10 +63,12 @@ export type AuthState = Readonly<{
   error: string | null
 }>
 
+const initialUser = getFromLocalStorage()
+
 const initialState: AuthState = {
-  isAuthenticated: false,
+  isAuthenticated: initialUser !== null,
   isLoading: false,
-  user: null,
+  user: initialUser,
   error: null,
 }
 
@@ -76,7 +78,7 @@ const reducer = (
 ): AuthState => {
   switch (action.type) {
     case LOG_IN_STARTED:
-      return { ...initialState, isLoading: true, error: null }
+      return { ...initialState, user: null, isLoading: true, error: null }
     case LOG_IN_FINISHED:
       return {
         ...prevState,
