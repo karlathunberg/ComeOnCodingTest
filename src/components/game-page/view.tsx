@@ -1,20 +1,12 @@
 import * as React from 'react'
-import { useCallback, useEffect } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
 
 import logoImg from '../../images/logo.svg'
 
-import '../../lib/comeon.game-1.0.min.js'
-
-declare var comeon: any
-
-const GamePage = () => {
-  const { code } = useParams<{ code: string }>()
-  const history = useHistory()
-  useEffect(() => comeon.game.launch(code), [code])
-
-  const handleBackClick = useCallback(() => history.goBack(), [history])
-
+const GamePageView: React.FC<{
+  onBackClick:
+    | ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void)
+    | undefined
+}> = ({ onBackClick }) => {
   return (
     <div>
       <div className="ui one column center aligned page grid">
@@ -28,7 +20,7 @@ const GamePage = () => {
             <div className="three wide column">
               <div
                 className="ui right floated secondary button inverted"
-                onClick={handleBackClick}>
+                onClick={onBackClick}>
                 <i className="left chevron icon" />
                 Back
               </div>
@@ -44,4 +36,4 @@ const GamePage = () => {
   )
 }
 
-export default GamePage
+export default GamePageView
