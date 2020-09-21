@@ -13,7 +13,7 @@ const GamePageContainer = () => {
   const history = useHistory()
   useEffect(() => comeon.game.launch(code), [code])
 
-  const handleBackClick = useCallback(() => history.goBack(), [history])
+  const handleBackClick = useCallback(() => history.push('/games'), [history])
 
   return <GamesPageView onBackClick={handleBackClick} />
 }
