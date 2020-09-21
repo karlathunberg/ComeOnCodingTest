@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import logoImg from '../../images/logo.svg'
+import AppHeader from '../app-header'
 
 const GamePageView: React.FC<{
   onBackClick:
@@ -9,11 +9,7 @@ const GamePageView: React.FC<{
 }> = ({ onBackClick }) => {
   return (
     <div>
-      <div className="ui one column center aligned page grid">
-        <div className="column twelve wide">
-          <img src={logoImg} alt="logo" />
-        </div>
-      </div>
+      <AppHeader />
       <div className="main container">
         <div className="ingame">
           <div className="ui grid centered">

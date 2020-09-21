@@ -18,7 +18,7 @@ import {
   selectAuthenticatedUser,
   selectAuthState,
 } from '../../redux/auth'
-import logoImg from '../../images/logo.svg'
+import AppHeader from '../app-header'
 import {
   getGames,
   getCategories,
@@ -61,11 +61,7 @@ const GamesPageView: React.FC<{
   onLogOutClick,
 }) => (
   <div>
-    <div className="ui one column center aligned page grid">
-      <div className="column twelve wide">
-        <img src={logoImg} alt="logo" />
-      </div>
-    </div>
+    <AppHeader />
     <div className="main container">
       <div className="casino">
         <div className="ui grid centered">

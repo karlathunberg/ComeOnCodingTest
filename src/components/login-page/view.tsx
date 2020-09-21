@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { logIn, selectAuthState } from '../../redux/auth'
-import logoImg from '../../images/logo.svg'
+import AppHeader from '../app-header'
 
 const LoginPageView: React.FC<{
   onUsernameChange: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -19,11 +19,7 @@ const LoginPageView: React.FC<{
   error,
 }) => (
   <div>
-    <div className="ui one column center aligned page grid">
-      <div className="column twelve wide">
-        <img src={logoImg} alt="logo" />
-      </div>
-    </div>
+    <AppHeader />
     <div className="main container">
       <div className="login">
         <div className="ui grid centered">
