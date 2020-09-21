@@ -13,7 +13,11 @@ import '../../images/game-icon/jackhammer.jpg'
 import '../../images/game-icon/starburst.jpg'
 import '../../images/game-icon/twinspin.jpg'
 
-import { selectAuthenticatedUser } from '../../redux/auth'
+import {
+  logOut,
+  selectAuthenticatedUser,
+  selectAuthState,
+} from '../../redux/auth'
 import logoImg from '../../images/logo.svg'
 import {
   getGames,
@@ -27,6 +31,7 @@ import { ICategory, IGame } from './reducer'
 const GamesPage = () => {
   const dispatch = useDispatch()
   const user = useSelector(selectAuthenticatedUser)
+  const { isAuthenticated, isLoading } = useSelector(selectAuthState)
   const {
     games: allGames,
     categories,
@@ -52,6 +57,14 @@ const GamesPage = () => {
     },
     [dispatch, search]
   )
+
+  const canLogOut = isAuthenticated && !isLoading
+
+  const handleLogOutClick = useCallback(() => {
+    if (canLogOut) {
+      dispatch(logOut(user.username))
+    }
+  }, [dispatch, logOut, canLogOut])
 
   const games = useMemo(
     () =>
@@ -94,7 +107,9 @@ const GamesPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="logout ui left floated secondary button inverted">
+              <div
+                className="logout ui left floated secondary button inverted"
+                onClick={handleLogOutClick}>
                 <i className="left chevron icon" />
                 Log Out
               </div>

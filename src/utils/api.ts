@@ -1,6 +1,7 @@
 import { API_URL } from './variables'
 
-const API_LOGIN_URL = `${API_URL}/login`
+const API_LOG_IN_URL = `${API_URL}/login`
+const API_LOG_OUT_URL = `${API_URL}/logout`
 const API_GAMES_URL = `${API_URL}/games`
 const API_CATEGORIES_URL = `${API_URL}/categories`
 
@@ -19,26 +20,56 @@ export interface IApiPlayer {
   event: string
 }
 
-export interface ILoginResponseBody {
+export interface ILogInResponseBody {
   status: ApiStatus
   player: IApiPlayer
   error: string
 }
 
 export async function logIn(username: string, password: string) {
-  const response: ApiResponse<ILoginResponseBody> = await fetch(API_LOGIN_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ username, password }),
-  })
+  const response: ApiResponse<ILogInResponseBody> = await fetch(
+    API_LOG_IN_URL,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    }
+  )
 
   try {
     response.parsedBody = await response.json()
   } catch (ex) {
     // this should never happen for a user
-    throw new Error(`Could not parse body of api request ${API_LOGIN_URL}`)
+    throw new Error(`Could not parse body of api request ${API_LOG_IN_URL}`)
+  }
+
+  return response
+}
+
+export interface ILogOutResponseBody {
+  status: ApiStatus
+  error: string
+}
+
+export async function logOut(username: string) {
+  const response: ApiResponse<ILogOutResponseBody> = await fetch(
+    API_LOG_OUT_URL,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username }),
+    }
+  )
+
+  try {
+    response.parsedBody = await response.json()
+  } catch (ex) {
+    // this should never happen for a user
+    throw new Error(`Could not parse body of api request ${API_LOG_OUT_URL}`)
   }
 
   return response
