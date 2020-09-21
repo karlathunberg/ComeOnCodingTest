@@ -12,7 +12,6 @@ import {
   SEARCH,
 } from './reducer'
 import { AppState } from '../../redux/root-reducer'
-import history from '../../utils/history'
 import * as Api from '../../utils/api'
 
 export const getGames = (): ThunkAction<

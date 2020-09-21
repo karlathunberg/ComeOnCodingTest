@@ -1,7 +1,5 @@
 import * as React from 'react'
-import { useCallback, useEffect, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useCallback } from 'react'
 
 // imported to make sure parcel includes it
 import '../../images/avatar/eric.jpg'
@@ -13,19 +11,7 @@ import '../../images/game-icon/jackhammer.jpg'
 import '../../images/game-icon/starburst.jpg'
 import '../../images/game-icon/twinspin.jpg'
 
-import {
-  logOut,
-  selectAuthenticatedUser,
-  selectAuthState,
-} from '../../redux/auth'
 import AppHeader from '../app-header'
-import {
-  getGames,
-  getCategories,
-  selectGamesState,
-  selectCategory,
-  search,
-} from './services'
 import { ICategory, IGame } from './reducer'
 import { AuthenticatedUser } from '../../redux/auth/reducer'
 

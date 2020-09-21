@@ -1,8 +1,5 @@
 import * as React from 'react'
-import { useCallback, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { logIn, selectAuthState } from '../../redux/auth'
 import AppHeader from '../app-header'
 
 const LoginPageView: React.FC<{

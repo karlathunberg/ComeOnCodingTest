@@ -1,5 +1,3 @@
-import { ThunkAction } from 'redux-thunk'
-
 export const GET_GAMES_STARTED = 'games/GET_GAMES_STARTED'
 export const GET_GAMES_FINISHED = 'games/GET_GAMES_FINISHED'
 export const GET_GAMES_FAILED = 'games/GET_GAMES_FAILED'

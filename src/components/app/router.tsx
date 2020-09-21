@@ -9,15 +9,12 @@ import {
   Switch,
 } from 'react-router-dom'
 
-import configureStore from '../../redux/configure-store'
 import history from '../../utils/history'
 import LoginPage from '../login-page'
 import GamesPage from '../games-page'
 import GamePage from '../game-page'
 import NotFoundPage from '../not-found-page'
 import { selectAuthState } from '../../redux/auth'
-
-const store = configureStore()
 
 interface IProps extends RouteProps {
   component?: React.ComponentType<RouteComponentProps>
