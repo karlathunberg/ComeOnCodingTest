@@ -27,142 +27,122 @@ import {
   search,
 } from './services'
 import { ICategory, IGame } from './reducer'
+import { AuthenticatedUser } from '../../redux/auth/reducer'
 
-const GamesPage = () => {
-  const dispatch = useDispatch()
-  const user = useSelector(selectAuthenticatedUser)
-  const { isAuthenticated, isLoading } = useSelector(selectAuthState)
-  const {
-    games: allGames,
-    categories,
-    selectedCategoryId,
-    searchText,
-  } = useSelector(selectGamesState)
-
-  useEffect(() => {
-    dispatch(getGames())
-    dispatch(getCategories())
-  }, [dispatch])
-
-  const handleCategoryClick = useCallback(
-    (categoryId: number) => {
-      dispatch(selectCategory(categoryId))
-    },
-    [dispatch, selectCategory]
-  )
-
-  const handleSearchTextChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(search(event.target.value))
-    },
-    [dispatch, search]
-  )
-
-  const canLogOut = isAuthenticated && !isLoading
-
-  const handleLogOutClick = useCallback(() => {
-    if (canLogOut) {
-      dispatch(logOut(user.username))
-    }
-  }, [dispatch, logOut, canLogOut])
-
-  const games = useMemo(
-    () =>
-      allGames
-        .filter(
-          (game) =>
-            !selectedCategoryId ||
-            game.categoryIds.some((id) => id === selectedCategoryId)
-        )
-        .filter(
-          (game) =>
-            !searchText || game.name.toLowerCase().indexOf(searchText) !== -1
-        ),
-    [allGames, selectedCategoryId, searchText]
-  )
-
-  return (
-    <div>
-      <div className="ui one column center aligned page grid">
-        <div className="column twelve wide">
-          <img src={logoImg} alt="logo" />
-        </div>
+const GamesPageView: React.FC<{
+  user: AuthenticatedUser
+  games: IGame[]
+  onGameClick: (
+    gameCode: string,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => void
+  categories: ICategory[]
+  selectedCategoryId: number | null
+  onCategoryClick: (
+    categoryId: number,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => void
+  searchText: string | null
+  onSearchTextChange:
+    | ((event: React.ChangeEvent<HTMLInputElement>) => void)
+    | undefined
+  onLogOutClick:
+    | ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void)
+    | undefined
+}> = ({
+  user,
+  games,
+  onGameClick,
+  categories,
+  selectedCategoryId,
+  onCategoryClick,
+  searchText,
+  onSearchTextChange,
+  onLogOutClick,
+}) => (
+  <div>
+    <div className="ui one column center aligned page grid">
+      <div className="column twelve wide">
+        <img src={logoImg} alt="logo" />
       </div>
-      <div className="main container">
-        <div className="casino">
-          <div className="ui grid centered">
-            <div className="twelve wide column">
-              <div className="ui list">
-                <div className="player item">
-                  <img
-                    className="ui avatar image"
-                    src={user.avatar}
-                    alt="avatar"
-                  />
-                  <div className="content">
-                    <div className="header">
-                      <b className="name">{user.name}</b>
-                    </div>
-                    <div className="description event">{user.event}</div>
+    </div>
+    <div className="main container">
+      <div className="casino">
+        <div className="ui grid centered">
+          <div className="twelve wide column">
+            <div className="ui list">
+              <div className="player item">
+                <img
+                  className="ui avatar image"
+                  src={user.avatar}
+                  alt="avatar"
+                />
+                <div className="content">
+                  <div className="header">
+                    <b className="name">{user.name}</b>
                   </div>
+                  <div className="description event">{user.event}</div>
                 </div>
               </div>
-              <div
-                className="logout ui left floated secondary button inverted"
-                onClick={handleLogOutClick}>
-                <i className="left chevron icon" />
-                Log Out
-              </div>
             </div>
-            <div className="four wide column">
-              <div className="search ui small icon input ">
-                <input
-                  type="text"
-                  placeholder="Search Game"
-                  value={searchText ?? ''}
-                  onChange={handleSearchTextChange}
-                />
-                <i className="search icon" />
-              </div>
+            <div
+              className="logout ui left floated secondary button inverted"
+              onClick={onLogOutClick}>
+              <i className="left chevron icon" />
+              Log Out
             </div>
           </div>
-          <div className="ui grid">
-            <div className="twelve wide column">
-              <h3 className="ui dividing header">Games</h3>
-              <div className="ui relaxed divided game items links">
-                {games.map((game) => (
-                  <GameItem key={game.name} game={game} />
-                ))}
-              </div>
+          <div className="four wide column">
+            <div className="search ui small icon input ">
+              <input
+                type="text"
+                placeholder="Search Game"
+                value={searchText ?? ''}
+                onChange={onSearchTextChange}
+              />
+              <i className="search icon" />
             </div>
-            <div className="four wide column">
-              <h3 className="ui dividing header">Categories</h3>
-              <div className="ui selection animated list category items">
-                {categories.map((category) => (
-                  <CategoryItem
-                    key={category.id}
-                    category={category}
-                    selected={selectedCategoryId === category.id}
-                    onClick={handleCategoryClick}
-                  />
-                ))}
-              </div>
+          </div>
+        </div>
+        <div className="ui grid">
+          <div className="twelve wide column">
+            <h3 className="ui dividing header">Games</h3>
+            <div className="ui relaxed divided game items links">
+              {games.map((game) => (
+                <GameItem key={game.name} game={game} onClick={onGameClick} />
+              ))}
+            </div>
+          </div>
+          <div className="four wide column">
+            <h3 className="ui dividing header">Categories</h3>
+            <div className="ui selection animated list category items">
+              {categories.map((category) => (
+                <CategoryItem
+                  key={category.id}
+                  category={category}
+                  selected={selectedCategoryId === category.id}
+                  onClick={onCategoryClick}
+                />
+              ))}
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  </div>
+)
 
 const GameItem: React.FC<{
   game: IGame
-}> = ({ game }) => {
-  const history = useHistory()
-
-  const handleGameClick = useCallback(
-    () => history.push(`/games/${game.code}`),
-    [history, game.code]
+  onClick: (
+    gameCode: string,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => void
+}> = ({ game, onClick }) => {
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+      onClick(game.code, event),
+    [onClick, game.code]
   )
 
   return (
@@ -178,7 +158,7 @@ const GameItem: React.FC<{
         <div className="extra">
           <div
             className="play ui right floated secondary button inverted"
-            onClick={handleGameClick}>
+            onClick={handleClick}>
             Play
             <i className="right chevron icon" />
           </div>
@@ -212,4 +192,4 @@ const CategoryItem: React.FC<{
     </div>
   )
 }
-export default GamesPage
+export default GamesPageView
