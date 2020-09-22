@@ -29,9 +29,13 @@ const LoginPageContainer = () => {
     [setPassword]
   )
 
-  const handleLogInClick = useCallback(() => {
-    return dispatch(logIn(username, password, returnUrl))
-  }, [dispatch, username, password, returnUrl])
+  const handleLogInClick = useCallback(
+    (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+      event.preventDefault()
+      return dispatch(logIn(username, password, returnUrl))
+    },
+    [dispatch, username, password, returnUrl]
+  )
 
   const logInIsDisabled = isAuthenticated || isLoading
 
