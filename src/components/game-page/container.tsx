@@ -4,8 +4,6 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import GamesPageView from './view'
 
-import '../../lib/comeon.game-1.0.min.js'
-
 declare var comeon: any
 
 const GamePageContainer = () => {
