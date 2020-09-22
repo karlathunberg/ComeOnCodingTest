@@ -1,15 +1,29 @@
 import * as React from 'react'
 import { useCallback } from 'react'
 
-// imported to make sure parcel includes it
-import '../../images/avatar/eric.jpg'
-import '../../images/avatar/rebecka.jpg'
-import '../../images/avatar/stoffe.jpg'
-import '../../images/game-icon/deadoralive.jpg'
-import '../../images/game-icon/jackandbeanstalk.jpg'
-import '../../images/game-icon/jackhammer.jpg'
-import '../../images/game-icon/starburst.jpg'
-import '../../images/game-icon/twinspin.jpg'
+import imageEric from '../../images/avatar/eric.jpg'
+import imageRebecka from '../../images/avatar/rebecka.jpg'
+import imageStoffe from '../../images/avatar/stoffe.jpg'
+import imageDeadoralive from '../../images/game-icon/deadoralive.jpg'
+import imageJackandbeanstalk from '../../images/game-icon/jackandbeanstalk.jpg'
+import imageJackhammer from '../../images/game-icon/jackhammer.jpg'
+import imageStarburst from '../../images/game-icon/starburst.jpg'
+import imageTwinspin from '../../images/game-icon/twinspin.jpg'
+
+/**
+ * We are doing this because our bundler will change the url of these static resources
+ * for production builds which means we can't rely on urls coming from the API.
+ */
+const images = {
+  'images/avatar/eric.jpg': imageEric,
+  'images/avatar/rebecka.jpg': imageRebecka,
+  'images/avatar/stoffe.jpg': imageStoffe,
+  'images/game-icon/deadoralive.jpg': imageDeadoralive,
+  'images/game-icon/jackandbeanstalk.jpg': imageJackandbeanstalk,
+  'images/game-icon/jackhammer.jpg': imageJackhammer,
+  'images/game-icon/starburst.jpg': imageStarburst,
+  'images/game-icon/twinspin.jpg': imageTwinspin,
+}
 
 import AppHeader from '../app-header'
 import { ICategory, IGame } from './reducer'
@@ -56,7 +70,7 @@ const GamesPageView: React.FC<{
               <div className="player item">
                 <img
                   className="ui avatar image"
-                  src={user.avatar}
+                  src={images[user.avatar]}
                   alt="avatar"
                 />
                 <div className="content">
@@ -130,7 +144,7 @@ const GameItem: React.FC<{
   return (
     <div className="game item">
       <div className="ui small image">
-        <img src={game.icon} alt="game-icon" />
+        <img src={images[game.icon]} alt="game-icon" />
       </div>
       <div className="content">
         <div className="header">
