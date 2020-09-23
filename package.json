@@ -16,7 +16,7 @@
     "build": "cross-env NODE_ENV=production yarn run type-check && yarn clean && parcel build ./src/index.html --no-source-maps",
     "prettify": "cross-env prettier --write './src/**/*.{ts,tsx}'",
     "serve": "concurrently --kill-others \"http-server-spa ./dist index.html 8080 --browse\" \"npm:start:api\"",
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./dist && rimraf ./.cache",
     "test": "jest",
     "test:watch": "jest --watch",
     "type-check": "tsc --noEmit",
