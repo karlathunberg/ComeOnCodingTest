@@ -10,7 +10,9 @@
   "license": "MIT",
   "main": "src/index.tsx",
   "scripts": {
-    "start": "parcel ./src/index.html --port 3000 --open",
+    "start": "concurrently --kill-others \"npm:start:web\" \"npm:start:api\"",
+    "start:web": "parcel ./src/index.html --port 3000 --open",
+    "start:api": "json-server --watch mock/mock-data.json --port 3001 --middlewares mock/mock-api.js",
     "build": "yarn run type-check && parcel build ./src/index.html --public-url '/'",
     "prettify": "cross-env prettier --write './src/**/*.{ts,tsx}'",
     "test": "jest",
@@ -116,6 +118,7 @@
     "cross-env": "^7.0.2",
     "jest": "^26.4.2",
     "jest-extended": "^0.11.5",
+    "json-server": "^0.16.1",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-goodie-bag": "^2.0.0",
     "react-test-renderer": "^16.13.1",
