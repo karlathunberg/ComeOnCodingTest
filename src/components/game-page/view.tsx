@@ -2,11 +2,16 @@ import * as React from 'react'
 
 import AppHeader from '../app-header'
 
+export interface ITexts {
+  back: string | React.ReactNode
+}
+
 const GamePageView: React.FC<{
   onBackClick:
     | ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void)
     | undefined
-}> = ({ onBackClick }) => {
+  texts: ITexts
+}> = ({ onBackClick, texts }) => {
   return (
     <div>
       <AppHeader />
@@ -18,7 +23,7 @@ const GamePageView: React.FC<{
                 className="ui right floated secondary button inverted"
                 onClick={onBackClick}>
                 <i className="left chevron icon" />
-                Back
+                {texts.back}
               </div>
             </div>
             <div className="ten wide column">

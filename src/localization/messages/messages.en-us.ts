@@ -8,6 +8,7 @@
 import { IMessages } from './messages'
 
 const messages: IMessages & Record<string, string> = {
+  GAME_PAGE_BACK: 'Back',
   GAMES_PAGE_AVATAR: 'Avatar',
   GAMES_PAGE_LOG_OUT: 'Log out',
   GAMES_PAGE_SEARCH_GAME: 'Search game',

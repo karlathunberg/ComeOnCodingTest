@@ -1,4 +1,5 @@
 export interface IMessages {
+  GAME_PAGE_BACK: string
   GAMES_PAGE_AVATAR: string
   GAMES_PAGE_LOG_OUT: string
   GAMES_PAGE_SEARCH_GAME: string
