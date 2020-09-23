@@ -15,6 +15,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 This dev environment was created from a PC running Windows 10 using Visual Studio Code and git. It should also work on Linux and MacOs but not yet verified.
 
+You need to install:
+
+- [Node](https://nodejs.org/) (tested on v12.18.3)
+- [Yarn](https://yarnpkg.com/) (tested on v1.12.3)
+
 ### Get Source Code
 
 Source code lives in [Karl A-Thunbergs GitHub account](https://github.com/karlathunberg/ComeOnCodingTest). Recommended way is to [add an ssh key on your GitHub account](https://docs.github.com/en/enterprise/2.15/user/articles/adding-a-new-ssh-key-to-your-github-account) and then clone the repo using a git client of your choice (e.g. SourceTree for a GUI or git for windows if you want a CLI).
