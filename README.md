@@ -63,7 +63,13 @@ To build files for release run:
 yarn build
 ```
 
-This will put built files into the **dist/** folder which can then be hosted on a static file server. Make sure to populate the variables in `src/utils/variables.ts` before release.
+This will put built files into the **dist/** folder which can then be hosted on a static file server. Make sure to populate the specified environment variables in `.env.samples` before release.
+
+To test out the build run:
+
+```
+yarn serve
+```
 
 ## Development
 
