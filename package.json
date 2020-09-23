@@ -80,19 +80,25 @@
   "dependencies": {
     "@testing-library/react": "^11.0.4",
     "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.5",
     "@types/webpack-env": "^1.15.3",
+    "components": "^0.1.0",
     "helpful-decorators": "^2.1.0",
     "husky": "^4.3.0",
+    "localization": "^1.0.2",
     "prettier": "^2.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hot-loader": "^4.12.21",
     "react-intl": "5.8.2",
     "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-starter-kit": "^2.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "src": "^1.1.2",
+    "utils": "^0.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
