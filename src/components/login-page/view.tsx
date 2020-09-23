@@ -2,13 +2,21 @@ import * as React from 'react'
 
 import AppHeader from '../app-header'
 
+export interface ITexts {
+  username: string
+  password: string
+  logIn: string
+}
+
 const LoginPageView: React.FC<{
   onUsernameChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   onPasswordChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   onLogInClick: (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void
   logInIsDisabled: boolean
   error: string | null
+  texts: ITexts
 }> = ({
+  texts,
   onUsernameChange,
   onPasswordChange,
   onLogInClick,
@@ -34,7 +42,7 @@ const LoginPageView: React.FC<{
                       <input
                         type="text"
                         name="username"
-                        placeholder="Username"
+                        placeholder={texts.username}
                         onChange={onUsernameChange}
                       />
                       <i className="user icon" />
@@ -45,7 +53,7 @@ const LoginPageView: React.FC<{
                       <input
                         type="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder={texts.password}
                         onChange={onPasswordChange}
                       />
                       <i className="lock icon" />
@@ -55,7 +63,7 @@ const LoginPageView: React.FC<{
                     <div className="ui icon input">
                       <input
                         type="submit"
-                        defaultValue="Login"
+                        defaultValue={texts.logIn}
                         disabled={logInIsDisabled}
                         onClick={onLogInClick}
                       />

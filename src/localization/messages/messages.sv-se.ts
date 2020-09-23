@@ -8,6 +8,9 @@
 import { IMessages } from './messages'
 
 const messages: IMessages & Record<string, string> = {
+  LOG_IN_PAGE_USERNAME: 'Användarnamn',
+  LOG_IN_PAGE_PASSWORD: 'Lösenord',
+  LOG_IN_PAGE_LOG_IN: 'Logga in',
   TITLE: 'ComeOn - Kodtest',
 }
 

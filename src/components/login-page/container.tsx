@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 
 import { logIn, selectAuthState } from '../../redux/auth'
 import LoginPageView from './view'
+import { useFormatMessage } from '../../localization'
 
 interface LocationState {
   returnUrl: string
@@ -39,6 +40,13 @@ const LoginPageContainer = () => {
 
   const logInIsDisabled = isAuthenticated || isLoading
 
+  const [t] = useFormatMessage()
+  const texts = {
+    username: t('LOG_IN_PAGE_USERNAME'),
+    password: t('LOG_IN_PAGE_PASSWORD'),
+    logIn: t('LOG_IN_PAGE_LOG_IN'),
+  }
+
   return (
     <LoginPageView
       onUsernameChange={handleUsernameChange}
@@ -46,6 +54,7 @@ const LoginPageContainer = () => {
       onLogInClick={handleLogInClick}
       logInIsDisabled={logInIsDisabled}
       error={error}
+      texts={texts}
     />
   )
 }
