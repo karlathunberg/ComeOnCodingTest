@@ -7,9 +7,7 @@ export interface ITexts {
 }
 
 const GamePageView: React.FC<{
-  onBackClick:
-    | ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void)
-    | undefined
+  onBackClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   texts: ITexts
 }> = ({ onBackClick, texts }) => {
   return (

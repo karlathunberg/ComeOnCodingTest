@@ -52,12 +52,8 @@ const GamesPageView: React.FC<{
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => void
   searchText: string | null
-  onSearchTextChange:
-    | ((event: React.ChangeEvent<HTMLInputElement>) => void)
-    | undefined
-  onLogOutClick:
-    | ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void)
-    | undefined
+  onSearchTextChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onLogOutClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   texts: ITexts
 }> = ({
   user,
