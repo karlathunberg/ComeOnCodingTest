@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { Redirect, Route, Router as RouterDom, Switch } from 'react-router-dom'
 
 import { LocalizationProvider } from '../../localization'
-import configureStore from '../../utils/configure-store'
+import configureStore from '../../redux/configure-store'
 import history from '../../utils/history'
 import LoginPage from '../login-page'
 import GamesPage from '../games-page'

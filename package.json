@@ -11,7 +11,7 @@
   "main": "src/index.tsx",
   "scripts": {
     "start": "concurrently --kill-others \"npm:start:web\" \"npm:start:api\"",
-    "start:web": "parcel ./src/index.html --port 3000 --open",
+    "start:web": "cross-env API_URL=http://localhost:3001 parcel ./src/index.html --port 3000 --open",
     "start:api": "json-server --watch mock/mock-data.json --port 3001 --middlewares mock/mock-api.js",
     "build": "yarn run type-check && parcel build ./src/index.html --public-url '/'",
     "prettify": "cross-env prettier --write './src/**/*.{ts,tsx}'",
