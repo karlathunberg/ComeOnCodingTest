@@ -8,6 +8,7 @@ import {
   selectAuthenticatedUser,
   selectAuthState,
 } from '../../redux/auth'
+import { useFormatMessage } from '../../localization'
 import {
   getGames,
   getCategories,
@@ -77,6 +78,16 @@ const GamesPageContainer = () => {
     [allGames, selectedCategoryId, searchText]
   )
 
+  const [t] = useFormatMessage()
+  const texts = {
+    avatar: t('GAMES_PAGE_AVATAR'),
+    logOut: t('GAMES_PAGE_LOG_OUT'),
+    searchGame: t('GAMES_PAGE_SEARCH_GAME'),
+    games: t('GAMES_PAGE_GAMES'),
+    categories: t('GAMES_PAGE_CATEGORIES'),
+    play: t('GAMES_PAGE_PLAY'),
+  }
+
   return (
     <GamesPageView
       user={user}
@@ -88,6 +99,7 @@ const GamesPageContainer = () => {
       searchText={searchText}
       onSearchTextChange={handleSearchTextChange}
       onLogOutClick={handleLogOutClick}
+      texts={texts}
     />
   )
 }

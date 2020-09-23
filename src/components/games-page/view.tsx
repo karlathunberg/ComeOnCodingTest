@@ -29,6 +29,15 @@ import AppHeader from '../app-header'
 import { ICategory, IGame } from './reducer'
 import { AuthenticatedUser } from '../../redux/auth/reducer'
 
+export interface ITexts {
+  avatar: string
+  logOut: string | React.ReactNode
+  searchGame: string
+  games: string | React.ReactNode
+  categories: string | React.ReactNode
+  play: string | React.ReactNode
+}
+
 const GamesPageView: React.FC<{
   user: AuthenticatedUser
   games: IGame[]
@@ -49,6 +58,7 @@ const GamesPageView: React.FC<{
   onLogOutClick:
     | ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void)
     | undefined
+  texts: ITexts
 }> = ({
   user,
   games,
@@ -59,6 +69,7 @@ const GamesPageView: React.FC<{
   searchText,
   onSearchTextChange,
   onLogOutClick,
+  texts,
 }) => (
   <div>
     <AppHeader />
@@ -71,7 +82,7 @@ const GamesPageView: React.FC<{
                 <img
                   className="ui avatar image"
                   src={images[user.avatar]}
-                  alt="avatar"
+                  alt={texts.avatar}
                 />
                 <div className="content">
                   <div className="header">
@@ -85,14 +96,14 @@ const GamesPageView: React.FC<{
               className="logout ui left floated secondary button inverted"
               onClick={onLogOutClick}>
               <i className="left chevron icon" />
-              Log Out
+              {texts.logOut}
             </div>
           </div>
           <div className="four wide column">
             <div className="search ui small icon input ">
               <input
                 type="text"
-                placeholder="Search Game"
+                placeholder={texts.searchGame}
                 value={searchText ?? ''}
                 onChange={onSearchTextChange}
               />
@@ -102,15 +113,20 @@ const GamesPageView: React.FC<{
         </div>
         <div className="ui grid">
           <div className="twelve wide column">
-            <h3 className="ui dividing header">Games</h3>
+            <h3 className="ui dividing header">{texts.games}</h3>
             <div className="ui relaxed divided game items links">
               {games.map((game) => (
-                <GameItem key={game.name} game={game} onClick={onGameClick} />
+                <GameItem
+                  key={game.name}
+                  game={game}
+                  onClick={onGameClick}
+                  text={texts.play}
+                />
               ))}
             </div>
           </div>
           <div className="four wide column">
-            <h3 className="ui dividing header">Categories</h3>
+            <h3 className="ui dividing header">{texts.categories}</h3>
             <div className="ui selection animated list category items">
               {categories.map((category) => (
                 <CategoryItem
@@ -134,7 +150,8 @@ const GameItem: React.FC<{
     gameCode: string,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => void
-}> = ({ game, onClick }) => {
+  text: string | React.ReactNode
+}> = ({ game, onClick, text }) => {
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
       onClick(game.code, event),
@@ -155,7 +172,7 @@ const GameItem: React.FC<{
           <div
             className="play ui right floated secondary button inverted"
             onClick={handleClick}>
-            Play
+            {text}
             <i className="right chevron icon" />
           </div>
         </div>

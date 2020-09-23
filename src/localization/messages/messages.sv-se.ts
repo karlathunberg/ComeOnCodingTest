@@ -8,6 +8,12 @@
 import { IMessages } from './messages'
 
 const messages: IMessages & Record<string, string> = {
+  GAMES_PAGE_AVATAR: 'Avatar',
+  GAMES_PAGE_LOG_OUT: 'Logga ut',
+  GAMES_PAGE_SEARCH_GAME: 'Sök spel',
+  GAMES_PAGE_GAMES: 'Spel',
+  GAMES_PAGE_CATEGORIES: 'Kategorier',
+  GAMES_PAGE_PLAY: 'Spela',
   LOG_IN_PAGE_USERNAME: 'Användarnamn',
   LOG_IN_PAGE_PASSWORD: 'Lösenord',
   LOG_IN_PAGE_LOG_IN: 'Logga in',
